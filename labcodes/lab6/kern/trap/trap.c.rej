@@ -1,0 +1,16 @@
+--- kern/trap/trap.c	2020-05-26 17:16:54.402663000 +0800
++++ kern/trap/trap.c	2020-05-27 15:17:00.096583848 +0800
+@@ -236,7 +248,12 @@
+          *    Every TICK_NUM cycle, you should set current process's current->need_resched = 1
+          */
+   
+-        break;
++	ticks++;
++	if(ticks % TICK_NUM == 0)
++		//assert(current != NULL);
++		//ticks = 0;
++		current->need_resched = 1;
++         break;
+     case IRQ_OFFSET + IRQ_COM1:
+         c = cons_getc();
+         cprintf("serial [%03d] %c\n", c, c);
